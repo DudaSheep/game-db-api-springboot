@@ -46,4 +46,9 @@ public class GameServiceImpl implements GameService {
     public List<Game> findGamesByStatus(GameStatus status) {
         return gameRepository.findByStatus(status);
     }
+
+    @Override
+    public List<Game> getAllGames() {
+        return gameRepository.findAll();
+    }
 }

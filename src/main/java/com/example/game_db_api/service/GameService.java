@@ -13,4 +13,6 @@ public interface GameService {
     Game updateGameStatus(Integer id, GameStatus status);
 
     List<Game> findGamesByStatus(GameStatus status);
+
+    List<Game> getAllGames();
 }

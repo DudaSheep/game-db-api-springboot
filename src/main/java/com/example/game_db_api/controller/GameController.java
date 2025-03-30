@@ -51,9 +51,16 @@ public class GameController {
         return ResponseEntity.ok(updatedGame);
     }
 
+    // Retorna jogos pelo status
     @GetMapping("/status/{status}")
     public ResponseEntity<List<Game>> getGamesByStatus(@PathVariable GameStatus status) {
         List<Game> games = gameService.findGamesByStatus(status);
+        return ResponseEntity.ok(games);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Game>> getAllGames() {
+        List<Game> games = gameService.getAllGames();
         return ResponseEntity.ok(games);
     }
 
