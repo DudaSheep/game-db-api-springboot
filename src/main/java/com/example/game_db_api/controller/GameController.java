@@ -18,6 +18,10 @@ import com.example.game_db_api.model.Game;
 import com.example.game_db_api.model.GameStatus;
 import com.example.game_db_api.service.GameService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+
 @CrossOrigin
 @RestController
 @RequestMapping("/games")
@@ -29,6 +33,11 @@ public class GameController {
         this.gameService = gameService;
     }
 
+    @Operation(summary = "Cria um novo jogo")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Jogo criado com sucesso"),
+            @ApiResponse(responseCode = "400", description = "Requisição inválida")
+    })
     @PostMapping
     public ResponseEntity<Game> gameCreate(@RequestBody Game gameToCreate) {
         var gameCreated = gameService.gameCreate(gameToCreate);
@@ -38,6 +47,11 @@ public class GameController {
     }
 
     // extrair valores de variáveis presentes na URL
+    @Operation(summary = "Retorna um jogo pelo ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Jogo encontrado"),
+            @ApiResponse(responseCode = "404", description = "Jogo não encontrado")
+    })
     @GetMapping("/{id}")
     public ResponseEntity<Game> findById(@PathVariable Integer id) {
         var game = gameService.findById(id);
@@ -45,6 +59,11 @@ public class GameController {
     }
 
     // Editar Status Game
+    @Operation(summary = "Atualiza o status de um jogo")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Status atualizado com sucesso"),
+            @ApiResponse(responseCode = "404", description = "Jogo não encontrado")
+    })
     @PatchMapping("/{id}/status")
     public ResponseEntity<Game> updateGameStatus(@PathVariable Integer id, @RequestBody GameStatus status) {
         var updatedGame = gameService.updateGameStatus(id, status);
@@ -52,12 +71,22 @@ public class GameController {
     }
 
     // Retorna jogos pelo status
+    @Operation(summary = "Retorna jogos por status")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Lista de jogos retornada com sucesso"),
+            @ApiResponse(responseCode = "404", description = "Status não encontrado")
+    })
     @GetMapping("/status/{status}")
     public ResponseEntity<List<Game>> getGamesByStatus(@PathVariable GameStatus status) {
         List<Game> games = gameService.findGamesByStatus(status);
         return ResponseEntity.ok(games);
     }
 
+    // Retorna todos os Jogos
+    @Operation(summary = "Retorna todos os jogos cadastrados")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Lista de jogos retornada com sucesso")
+    })
     @GetMapping
     public ResponseEntity<List<Game>> getAllGames() {
         List<Game> games = gameService.getAllGames();
