@@ -18,7 +18,16 @@ public class Game {
     private String description;
 
     @Column(length = 50)
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private GameStatus status;
+
+    public GameStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(GameStatus status) {
+        this.status = status;
+    }
 
     public Integer getId() {
         return id;
@@ -44,11 +53,4 @@ public class Game {
         this.description = description;
     }
 
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
 }
