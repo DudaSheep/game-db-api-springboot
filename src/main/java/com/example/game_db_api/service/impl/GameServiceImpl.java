@@ -51,4 +51,13 @@ public class GameServiceImpl implements GameService {
     public List<Game> getAllGames() {
         return gameRepository.findAll();
     }
+
+    @Override
+    public void deleteGameById(Integer id) {
+        if (gameRepository.existsById(id)) {
+            gameRepository.deleteById(id);
+        } else {
+            throw new RuntimeException("Game not found with id: " + id);
+        }
+    }
 }

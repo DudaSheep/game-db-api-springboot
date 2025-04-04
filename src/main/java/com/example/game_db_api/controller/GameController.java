@@ -3,8 +3,11 @@ package com.example.game_db_api.controller;
 import java.net.URI;
 
 import java.util.List;
+
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -91,6 +94,17 @@ public class GameController {
     public ResponseEntity<List<Game>> getAllGames() {
         List<Game> games = gameService.getAllGames();
         return ResponseEntity.ok(games);
+    }
+
+    @Operation(summary = "Deleta um Game pelo Id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Game excluido com sucesso"),
+            @ApiResponse(responseCode = "500", description = "Game nao encontrado com este Id")
+    })
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteById(@PathVariable Integer id) {
+        gameService.deleteGameById(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
 }

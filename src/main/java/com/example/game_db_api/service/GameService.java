@@ -15,4 +15,6 @@ public interface GameService {
     List<Game> findGamesByStatus(GameStatus status);
 
     List<Game> getAllGames();
+
+    void deleteGameById(Integer id);
 }
